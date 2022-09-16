@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, Image, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, TouchableOpacity, View, Text } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute, useNavigation } from "@react-navigation/native";
@@ -70,8 +70,13 @@ export function Game() {
           renderItem={({ item }) => <Ad onConnect={() => {}} data={item} />}
           horizontal
           style={styles.containerList}
-          contentContainerStyle={styles.contentList}
+          contentContainerStyle={adsList.length > 0 ? styles.contentList : styles.emptyListContainer}
           showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <Text style={styles.emptyListText}>
+              Não há anúncios para esse jogo ainda.
+            </Text>
+          )}
         />
       </SafeAreaView>
     </Background>

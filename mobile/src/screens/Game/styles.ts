@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { THEME } from "../../theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -37,4 +38,14 @@ export const styles = StyleSheet.create({
   containerList: {
     width: "100%",
   },
+  emptyListContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  emptyListText: {
+    fontSize:  THEME.FONT_SIZE.SM,
+    color: THEME.COLORS.CAPTION_300,
+    fontFamily: THEME.FONT_FAMILY.REGULAR
+  }
 });
