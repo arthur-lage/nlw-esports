@@ -163,7 +163,8 @@ export function Games() {
                   Costumo me conectar ao chat de voz
                 </label>
               </div>
-              <div className="flex justify-end items-center gap-4">
+
+              <footer className="flex justify-end items-center gap-4">
                 <Dialog.Close className="transition-all duration-150 hover:bg-zinc-600 cursor-pointer text-white bg-zinc-500 font-inter font-semibold px-5 rounded-md py-[0.90625rem] text-base">
                   Cancelar
                 </Dialog.Close>
@@ -174,7 +175,7 @@ export function Games() {
                   <GameController size={24} color="#fff" />
                   <span>Encontrar duo</span>
                 </button>
-              </div>
+              </footer>
             </form>
           </Dialog.Content>
         </Dialog.Portal>

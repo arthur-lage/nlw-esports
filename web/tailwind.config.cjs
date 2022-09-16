@@ -10,7 +10,8 @@ module.exports = {
         "fade-black": "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 60%);"
       },
       fontFamily: {
-        inter: ["Inter", "monospace"]
+        inter: ["Inter", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"]
       },
     },
   },
