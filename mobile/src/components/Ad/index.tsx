@@ -5,6 +5,7 @@ import { styles } from "./styles";
 import { GameController } from "phosphor-react-native";
 
 interface AdProps {
+  id: string;
   name: string;
   yearsPlaying: number;
   weekDays: string[];
@@ -15,7 +16,7 @@ interface AdProps {
 
 interface Props {
   data: AdProps;
-  onConnect: () => void;
+  onConnect: (adId: string) => void;
 }
 
 export function Ad({ data, onConnect }: Props) {
@@ -48,7 +49,10 @@ export function Ad({ data, onConnect }: Props) {
           <Text style={styles.notUsingVoiceChannel}>Não</Text>
         )}
       </View>
-      <TouchableOpacity onPress={onConnect} style={styles.connect}>
+      <TouchableOpacity
+        onPress={() => onConnect(data.id)}
+        style={styles.connect}
+      >
         <GameController size={20} color="#fff" />
         <Text style={styles.connectText}>Conectar</Text>
       </TouchableOpacity>

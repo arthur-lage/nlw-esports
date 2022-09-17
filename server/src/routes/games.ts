@@ -80,10 +80,10 @@ routes.post("/:id/ads", async (req: Request, res: Response) => {
       name,
       yearsPlaying,
       discord,
-      weekDays: weekDays.split(","),
+      weekDays: weekDays.join(","),
       hourStart: convertHoursStringToMinutes(hourStart),
       hourEnd: convertHoursStringToMinutes(hourEnd),
-      useVoiceChannel,
+      useVoiceChannel: useVoiceChannel ? 1 : 0,
     };
 
     await prisma.ad.create({

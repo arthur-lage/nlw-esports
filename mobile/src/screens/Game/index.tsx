@@ -17,9 +17,14 @@ import { Background } from "../../components/Background";
 import { Heading } from "../../components/Heading";
 import { Ad } from "../../components/Ad";
 import { API_URL } from "../../utils/api";
+import { DuoMatch } from "../../components/DuoMatch";
+import { Loading } from "../../components/Loading/index";
 
 export function Game() {
   const [adsList, setAdsList] = useState<any[]>([]);
+  const [discord, setDiscord] = useState("");
+  const [isModalActive, setIsModalActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const route = useRoute();
   const game = route.params as GameParams;
@@ -32,14 +37,29 @@ export function Game() {
 
   useEffect(() => {
     async function getAds() {
-      const res = await fetch(`${API_URL}/games/${game.id}/ads`);
-      const json = await res.json();
+      try {
+        const res = await fetch(`${API_URL}/games/${game.id}/ads`);
+        const json = await res.json();
 
-      setAdsList(json);
+        setIsLoading(false);
+        setAdsList(json);
+      } catch (err) {
+        setIsLoading(false);
+        console.error(err);
+      }
     }
 
     getAds();
   }, []);
+
+  async function handleConnect(adId: string) {
+    const res = await fetch(`${API_URL}/ads/${adId}/discord`);
+    const json = await res.json();
+
+    setDiscord(json);
+
+    setIsModalActive(true);
+  }
 
   return (
     <Background>
@@ -64,19 +84,35 @@ export function Game() {
 
         <Heading title={game.title} subtitle="Conecte-se e comece a jogar!" />
 
-        <FlatList
-          data={adsList}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Ad onConnect={() => {}} data={item} />}
-          horizontal
-          style={styles.containerList}
-          contentContainerStyle={adsList.length > 0 ? styles.contentList : styles.emptyListContainer}
-          showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={() => (
-            <Text style={styles.emptyListText}>
-              Não há anúncios para esse jogo ainda.
-            </Text>
-          )}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            data={adsList}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Ad onConnect={handleConnect} data={item} />
+            )}
+            horizontal
+            style={styles.containerList}
+            contentContainerStyle={
+              adsList.length > 0
+                ? styles.contentList
+                : styles.emptyListContainer
+            }
+            showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={() => (
+              <Text style={styles.emptyListText}>
+                Não há anúncios para esse jogo ainda.
+              </Text>
+            )}
+          />
+        )}
+
+        <DuoMatch
+          discord={discord}
+          setIsModalActive={setIsModalActive}
+          visible={isModalActive}
         />
       </SafeAreaView>
     </Background>
