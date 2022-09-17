@@ -18,7 +18,7 @@ export function DuoMatch({ discord, setIsModalActive, ...rest }: Props) {
   }
 
   return (
-    <Modal statusBarTranslucent transparent {...rest}>
+    <Modal animationType="fade" statusBarTranslucent transparent {...rest}>
       <View style={styles.container}>
         <View style={styles.modalContent}>
           <CheckCircle size={48} color={THEME.COLORS.SUCCESS} />
