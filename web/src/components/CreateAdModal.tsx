@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
+import { Label } from "@radix-ui/react-label";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { GameController } from "phosphor-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
@@ -68,12 +69,13 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
             >
               Qual o game?
             </label>
+
             <select
               id="game"
               name="game"
               value={game}
               onChange={(e) => setGame(e.target.value)}
-              className="w-full h-[3.125rem] bg-zinc-900 py-3 px-4 font-roboto text-sm text-zinc-500 rounded-[.25rem]"
+              className="cursor-pointer w-full h-[3.125rem] bg-zinc-900 py-3 px-4 font-roboto text-sm text-zinc-500 rounded-[.25rem]"
             >
               <option disabled value="">
                 Selecione o game que deseja jogar
