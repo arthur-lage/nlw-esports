@@ -33,18 +33,14 @@ export default function App() {
   const responseNotificationListener = useRef<Subscription>();
 
   useEffect(() => {
-    getPushNotificationsToken().then(res => console.log(res))
+    getPushNotificationsToken().then((res) => console.log(res));
   }, []);
 
   useEffect(() => {
     getNotificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log(notification)
-      });
+      Notifications.addNotificationReceivedListener((notification) => {});
     responseNotificationListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response)
-      });
+      Notifications.addNotificationResponseReceivedListener((response) => {});
 
     return () => {
       if (

@@ -6,16 +6,16 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Game {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   title     String
   bannerUrl String
   createdAt DateTime @default(now())
-  ads        Ad[]
+  ads       Ad[]
 }
 
 model Ad {
@@ -27,8 +27,8 @@ model Ad {
   weekDays        String
   hourStart       Int
   hourEnd         Int
-  useVoiceChannel Int
+  useVoiceChannel Boolean
   createdAt       DateTime @default(now())
-  
-  game            Game     @relation(fields: [gameId], references: [id])
+
+  game Game @relation(fields: [gameId], references: [id])
 }

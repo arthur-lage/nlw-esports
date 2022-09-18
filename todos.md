@@ -9,9 +9,9 @@ web
 
 server
 
-[] - validation with zod
-[] - use postgresql instead of sqlite
-[] - change how booleans are stored
+[x] - validation with zod
+[x] - use postgresql instead of sqlite
+[x] - change how booleans are stored
 
 mobile
 

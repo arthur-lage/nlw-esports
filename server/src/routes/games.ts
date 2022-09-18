@@ -3,6 +3,8 @@ import { prisma } from "../prisma/prisma";
 import { convertHoursStringToMinutes } from "../../utils/convert-hours-string-to-minutes";
 import { convertMinutesToHoursString } from "../../utils/convert-minutes-to-hours-string";
 
+import { validateAd } from '../../utils/validate-ad'
+
 const routes = Router();
 
 routes.get("/", async (req: Request, res: Response) => {
@@ -83,13 +85,19 @@ routes.post("/:id/ads", async (req: Request, res: Response) => {
       weekDays: weekDays.join(","),
       hourStart: convertHoursStringToMinutes(hourStart),
       hourEnd: convertHoursStringToMinutes(hourEnd),
-      useVoiceChannel: useVoiceChannel ? 1 : 0,
+      useVoiceChannel: useVoiceChannel,
     };
 
+    const data = await validateAd(newAd)
+
+    if(data.errors) {
+      return res.status(400).json({ message: data.errors })
+    }
+    
     await prisma.ad.create({
       data: newAd,
     });
-
+    
     return res.status(201).json({ message: "Ad created successfully." });
   } catch (err: any) {
     console.error(err);
