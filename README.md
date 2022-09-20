@@ -99,3 +99,4 @@ npx expo start
 If you wish to test the application, click the link below:
 
 [Find Your DUO - WEB](https://find-your-duo-al.vercel.com)
+[Find Your DUO - APP](https://github.com/arthur-lage/nlw-esports)
