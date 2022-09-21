@@ -4,7 +4,6 @@ web
 [] - responsiveness
 [] - carousel - keen slider
 [] - react hook form
-[] - connect with discord api
 
 server
 
@@ -17,4 +16,3 @@ mobile
 [] - show push notifications
 [] - send notification when someone connects with you
 [] - follow games to know if new ads were created
-[] - use discord api to connect the user
