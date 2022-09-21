@@ -1,9 +1,11 @@
 import { Games } from "./pages/Games";
 
+import { Routes, Route } from "react-router-dom";
+
 export function App() {
   return (
-    <>
-      <Games />
-    </>
+    <Routes>
+      <Route path="/" element={<Games />} />
+    </Routes>
   );
 }

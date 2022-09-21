@@ -17,5 +17,4 @@ mobile
 [] - show push notifications
 [] - send notification when someone connects with you
 [] - follow games to know if new ads were created
-[] - can create ads using mobile
 [] - use discord api to connect the user
