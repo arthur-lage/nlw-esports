@@ -11,9 +11,9 @@ import { GameList } from "../../components/GameList";
 import { api } from "../../services/api";
 import { CreateAdModal } from "../../components/CreateAdModal";
 
+
 export function Games() {
   const [games, setGames] = useState<IGame[] | null>(null);
-
 
   const [isCreateAdModalOpen, setIsCreateAdModalOpen] = useState(false);
 
