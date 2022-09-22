@@ -18,7 +18,7 @@ export function Game({ data }: Props) {
       href="#"
     >
       <img
-        className="w-[11.25rem] h-[15rem] rounded-lg"
+        className="mobile_xl:w-[25rem] mobile_m:w-[75vw] object-cover w-[11.25rem] h-[15rem] rounded-lg"
         src={data.bannerUrl}
         alt={data.title}
       />

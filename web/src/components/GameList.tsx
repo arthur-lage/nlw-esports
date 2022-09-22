@@ -24,17 +24,17 @@ export function GameList({ games }: Props) {
   }
 
   return (
-    <div className="flex items-center gap-6 px-12">
-      <button onClick={leftClick} type="button" className="bg-transparent cursor-pointer">
+    <div className="flex items-center gap-6 mobile_xl:gap-2 ">
+      <button onClick={leftClick} type="button" className="mobile_xl:hidden bg-transparent cursor-pointer">
         <CaretLeft size={48} className="text-zinc-400" />
       </button>
       <section
         ref={carousel}
-        className="scroll-smooth no-scrollbar max-w-[75rem] pl-3  flex items-center overflow-y-hidden py-4 overflow-x-auto w-full mb-8 gap-6"
+        className="scroll-smooth no-scrollbar max-w-[75rem] mobile_xl:max-w-[80vw] pl-3 flex items-center overflow-y-hidden py-4 overflow-x-auto w-full mb-8 gap-6"
       >
         {games && games.map((game) => <Game key={game.id} data={game} />)}
       </section>
-      <button onClick={rightClick} type="button" className="bg-transparent cursor-pointer">
+      <button onClick={rightClick} type="button" className="mobile_xl:hidden bg-transparent cursor-pointer">
         <CaretRight size={48} className="text-zinc-400" />
       </button>
     </div>

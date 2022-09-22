@@ -29,9 +29,9 @@ export function Games() {
 
   return (
     <div className="min-h-[100vh] flex flex-col justify-center items-center">
-      <img className="mb-20 mt-20" src={Logo} alt="NLW e-sports Logo" />
+      <img className="mb-20 mt-20 mobile_l:w-[15rem]" src={Logo} alt="NLW e-sports Logo" />
 
-      <h1 className="font-inter mb-16 text-center text-white text-[4rem] font-black inline-block">
+      <h1 className="font-inter mb-16 text-center text-white text-[4rem] font-black inline-block mobile_xl:text-[2.5rem] mobile_m:text-[1.95rem] mobile_s:text-[1.6rem]">
         Seu{" "}
         <span className="bg-clip-text bg-purple-green-yellow-gradient text-transparent">
           duo
