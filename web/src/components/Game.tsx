@@ -14,7 +14,7 @@ interface Props {
 export function Game({ data }: Props) {
   return (
     <a
-      className="rounded-lg relative hover:brightness-110 hover:scale-105 transition-all duration-150"
+      className="rounded-lg flex-none relative hover:brightness-110 hover:scale-105 transition-all duration-150"
       href="#"
     >
       <img
