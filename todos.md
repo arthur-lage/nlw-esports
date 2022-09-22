@@ -1,9 +1,9 @@
 web
 
 [] - validate forms
-[] - responsiveness
-[] - carousel - keen slider
 [] - react hook form
+[x] - responsiveness
+[x] - carousel
 
 server
 
