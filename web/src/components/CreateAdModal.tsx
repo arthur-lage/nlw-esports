@@ -56,15 +56,15 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="z-20 bg-black/60 inset-0 fixed" />
-      <Dialog.Content className="z-30 bg-[#2A2634] rounded-lg w-[29.75rem] px-10 py-8 text-white top-1/2 left-1/2 fixed translate-x-[-50%] translate-y-[-50%] shadow-black/25">
-        <Dialog.Title className="font-inter font-black text-[2rem] mb-8">
+      <Dialog.Content className="max-h-[90vh] scrollbar-thin scrollbar-thumb-zinc-500 overflow-y-scroll z-30 bg-[#2A2634] rounded-lg w-[29.75rem] mobile_xl:w-[80vw] mobile_xl:px-6 px-10 py-8 text-white top-1/2 left-1/2 fixed translate-x-[-50%] translate-y-[-50%] shadow-black/25">
+        <Dialog.Title className="font-inter font-black text-[2rem] mb-8 mobile_xl:mb-3 mobile_xl:text-[1.5rem] tracking-wide">
           Publique um anúncio
         </Dialog.Title>
 
         <form onSubmit={handleCreateAd} className="flex flex-col">
           <div className="flex flex-col gap-2 mb-4">
             <label
-              className="mb-2 font-inter font-semibold text-base"
+              className="mb-2 mobile_xl:mb-1 font-inter font-semibold text-base"
               htmlFor="game"
             >
               Qual o game?
@@ -90,7 +90,7 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
           </div>
           <div className="flex flex-col gap-2 mb-4">
             <label
-              className="mb-2 font-inter font-semibold text-base text-white"
+              className="mb-2 mobile_xl:mb-1 font-inter font-semibold text-base text-white"
               htmlFor="name"
             >
               Seu nome (ou nickname)
@@ -99,15 +99,16 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
               placeholder="Como te chamam dentro do game?"
               type="text"
               id="name"
+              autoComplete="off"
               name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="flex justify-between w-full items-center mb-4">
-            <div className="flex flex-col">
+          <div className="flex justify-between w-full items-center mb-4 mobile_xl:flex-col mobile_xl:gap-3">
+            <div className="flex flex-col mobile_xl:w-full">
               <label
-                className="mb-2 font-inter font-semibold text-base text-white"
+                className="mb-2 mobile_xl:mb-1 font-inter font-semibold text-base text-white"
                 htmlFor="yearsPlaying"
               >
                 Joga há quantos anos?
@@ -119,12 +120,12 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
                 value={yearsPlaying}
                 onChange={(e) => setYearsPlaying(e.target.value)}
                 placeholder="Tudo bem ser ZERO"
-                className="w-[12rem] h-[3.125rem] bg-zinc-900 py-3 px-4 font-roboto text-sm text-zinc-500 rounded-[.25rem]"
+                className="w-[12rem] mobile_xl:w-full h-[3.125rem] bg-zinc-900 py-3 px-4 font-roboto text-sm text-zinc-500 rounded-[.25rem]"
               />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col mobile_xl:w-full">
               <label
-                className="mb-2 font-inter font-semibold text-base text-white"
+                className="mb-2 mobile_xl:mb-1 font-inter font-semibold text-base text-white"
                 htmlFor="discord"
               >
                 Qual seu Discord?
@@ -132,17 +133,18 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
               <Input
                 type="text"
                 id="discord"
-                name="discord"
+              autoComplete="off"
+              name="discord"
                 value={discord}
                 onChange={(e) => setDiscord(e.target.value)}
                 placeholder="Usuario#0000"
-                className="w-[12rem] h-[3.125rem] bg-zinc-900 py-3 px-4 font-roboto text-sm text-zinc-500 rounded-[.25rem]"
+                className="w-[12rem] mobile_xl:w-full h-[3.125rem] bg-zinc-900 py-3 px-4 font-roboto text-sm text-zinc-500 rounded-[.25rem]"
               />
             </div>
           </div>
-          <div className="flex justify-between mb-6">
+          <div className="flex justify-between mb-6 mobile_xl:flex-col mobile_xl:gap-3">
             <div className="flex flex-col">
-              <label className="mb-2 font-inter font-semibold text-base text-white">
+              <label className="mb-2 mobile_xl:mb-3 font-inter font-semibold text-base text-white">
                 Quando costuma jogar?
               </label>
 
@@ -150,7 +152,7 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
                 type="multiple"
                 value={weekDays}
                 onValueChange={setWeekDays}
-                className="flex gap-1 max-w-[11rem] flex-wrap"
+                className="flex gap-1 max-w-[11rem] mobile_xl:max-w-full flex-wrap"
               >
                 <ToggleGroup.Item
                   value="0"
@@ -219,7 +221,7 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
             </div>
             <div className="flex flex-col">
               <label
-                className="mb-2 font-inter font-semibold text-base text-white"
+                className="mb-2 mobile_xl:mb-1 font-inter font-semibold text-base text-white"
                 htmlFor="hourStart"
               >
                 Qual horário do dia?
@@ -267,13 +269,13 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
             </label>
           </div>
 
-          <footer className="flex justify-end items-center gap-4">
-            <Dialog.Close className="transition-all duration-150 hover:bg-zinc-600 cursor-pointer text-white bg-zinc-500 font-inter font-semibold px-5 rounded-md py-[0.90625rem] text-base">
+          <footer className="flex justify-end items-center gap-4 mobile_xl:flex-col">
+            <Dialog.Close className="mobile_xl:w-full transition-all duration-150 hover:bg-zinc-600 cursor-pointer text-white bg-zinc-500 font-inter font-semibold px-5 rounded-md py-[0.90625rem] text-base">
               Cancelar
             </Dialog.Close>
             <button
               type="submit"
-              className="transition-all duration-150 hover:bg-purple-600 cursor-pointer text-white bg-violet-500 font-inter font-semibold rounded-md flex items-center px-5 py-[0.90625rem] gap-3 text-base"
+              className="mobile_xl:w-full transition-all duration-150 hover:bg-purple-600 cursor-pointer text-white bg-violet-500 font-inter font-semibold rounded-md flex items-center mobile_xl:justify-center px-5 py-[0.90625rem] gap-3 mobile_xl:text-sm text-base"
             >
               <GameController size={24} color="#fff" />
               <span>Encontrar duo</span>
