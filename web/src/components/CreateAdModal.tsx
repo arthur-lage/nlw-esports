@@ -1,18 +1,26 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Label } from "@radix-ui/react-label";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { GameController } from "phosphor-react";
+import { GameController, XCircle } from "phosphor-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { api } from "../services/api";
+import { validateDiscord } from "../utils/validateDiscord";
+import { validateTime } from "../utils/validateTime";
 import { CheckboxInput } from "./Checkbox";
 import { IGame } from "./Game";
 import { Input } from "./Input";
+import { ToastNotification } from "./ToastNotification";
+import * as Toast from "@radix-ui/react-toast";
 
 interface Props {
   setIsCreateAdModalOpen: (state: boolean) => void;
+  setIsSuccessToastOpen: (state: boolean) => void;
 }
 
-export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
+export function CreateAdModal({
+  setIsCreateAdModalOpen,
+  setIsSuccessToastOpen,
+}: Props) {
   const [games, setGames] = useState<IGame[] | null>(null);
   const [game, setGame] = useState("");
   const [name, setName] = useState("");
@@ -22,6 +30,10 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
   const [hourEnd, setHourEnd] = useState("");
   const [weekDays, setWeekDays] = useState<string[]>([]);
   const [useVoiceChannel, setUseVoiceChannel] = useState(false);
+
+  const [toastTitle, setToastTitle] = useState("");
+  const [toastDescription, setToastDescription] = useState("");
+  const [isToastOpen, setIsToastOpen] = useState(false);
 
   useEffect(() => {
     async function getGames() {
@@ -33,8 +45,115 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
     getGames();
   }, []);
 
+  function validateForm() {
+    let isGameValid = false;
+
+    games?.forEach((gameObj) => {
+      if (game === gameObj.id) {
+        isGameValid = true;
+      }
+    });
+
+    if (!game || game.length == 0 || !isGameValid) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa selecionar um jogo.",
+        },
+      };
+    }
+
+    if (!name || name.length == 0) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa nos dizer qual seu nome dentro do jogo.",
+        },
+      };
+    }
+
+    if (!yearsPlaying || yearsPlaying.length == 0 || Number(yearsPlaying) < 0) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa nos dizer há quanto tempo você joga.",
+        },
+      };
+    }
+
+    let isDiscordValid = validateDiscord(discord);
+
+    if (!discord || discord.length == 0 || !isDiscordValid) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa de um discord válido.",
+        },
+      };
+    }
+
+    if (!discord || discord.length == 0 || !isDiscordValid) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa de um discord válido.",
+        },
+      };
+    }
+
+    if (!weekDays || weekDays.length == 0) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa selecionar pelo menos um dia da semana!",
+        },
+      };
+    }
+
+    if (!hourStart || hourStart.length == 0 || !validateTime(hourStart)) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa selecionar um horário inicial.",
+        },
+      };
+    }
+
+    if (!hourEnd || hourEnd.length == 0 || !validateTime(hourEnd)) {
+      return {
+        success: false,
+        errors: {
+          title: "Erro ao enviar o formulário",
+          description: "Você precisa selecionar um horário final.",
+        },
+      };
+    }
+
+    return {
+      success: true,
+      errors: null,
+    };
+  }
+
   async function handleCreateAd(e: FormEvent) {
     e.preventDefault();
+
+    const isFormValid = validateForm();
+
+    if (!isFormValid.success && isFormValid.errors) {
+      setIsToastOpen(true);
+      setToastTitle(isFormValid.errors.title);
+      setToastDescription(isFormValid.errors.description);
+
+      return;
+    }
 
     try {
       const res = await api.post(`/games/${game}/ads`, {
@@ -48,6 +167,16 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
       });
 
       setIsCreateAdModalOpen(false);
+      setIsSuccessToastOpen(true);
+
+      setGame("");
+      setName("");
+      setYearsPlaying("");
+      setDiscord("");
+      setWeekDays([]);
+      setHourStart("");
+      setHourEnd("");
+      setUseVoiceChannel(false);
     } catch (err) {
       console.error(err);
     }
@@ -56,6 +185,7 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="z-20 bg-black/60 inset-0 fixed" />
+
       <Dialog.Content className="max-h-[90vh] scrollbar-thin scrollbar-thumb-zinc-500 overflow-y-scroll z-30 bg-[#2A2634] rounded-lg w-[29.75rem] mobile_xl:w-[80vw] mobile_xl:px-6 px-10 py-8 text-white top-1/2 left-1/2 fixed translate-x-[-50%] translate-y-[-50%] shadow-black/25">
         <Dialog.Title className="font-inter font-black text-[2rem] mb-8 mobile_xl:mb-3 mobile_xl:text-[1.5rem] tracking-wide">
           Publique um anúncio
@@ -133,8 +263,8 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
               <Input
                 type="text"
                 id="discord"
-              autoComplete="off"
-              name="discord"
+                autoComplete="off"
+                name="discord"
                 value={discord}
                 onChange={(e) => setDiscord(e.target.value)}
                 placeholder="Usuario#0000"
@@ -282,6 +412,21 @@ export function CreateAdModal({ setIsCreateAdModalOpen }: Props) {
             </button>
           </footer>
         </form>
+
+        <div className="relative">
+          <Toast.ToastProvider swipeDirection="right">
+            <ToastNotification
+              type="error"
+              title={toastTitle}
+              description={toastDescription}
+              icon={<XCircle size={32} className="text-red-600" />}
+              open={isToastOpen}
+              setOpen={setIsToastOpen}
+            />
+
+            <Toast.Viewport />
+          </Toast.ToastProvider>
+        </div>
       </Dialog.Content>
     </Dialog.Portal>
   );

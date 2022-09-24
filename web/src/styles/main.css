@@ -10,3 +10,40 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.medium-shadow-red {
+  box-shadow: 0px 0px 5px 0.5px #ef4444;
+}
+
+.medium-shadow-green {
+  box-shadow: 0px 0px 5px 0.5px #22c55e;
+}
+
+.medium-shadow-toast {
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast-root-animation[data-swipe="move"] {
+    transform: translateX(var(--radix-toast-swipe-move-x));
+  }
+
+  .toast-root-animation[data-swipe="cancel"] {
+    transform: translateX(0);
+    transition: transform 200ms ease-out;
+  }
+
+  .toast-root-animation[data-swipe="end"] {
+    animation: slideRight 100ms ease-out;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: "translateX(var(--radix-toast-swipe-end-x))";
+  }
+
+  to {
+    transform: "translateX(100%)";
+  }
+}
