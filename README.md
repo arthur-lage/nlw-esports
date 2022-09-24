@@ -93,10 +93,3 @@ npx expo start
 # Connect using your phone or mobile emulator
 
 ```
-
-## 🔗 How to use the app
-
-If you wish to test the application, click the link below:
-
-[Find Your DUO - WEB](https://find-your-duo-al.vercel.com)
-[Find Your DUO - APP](https://github.com/arthur-lage/nlw-esports)
